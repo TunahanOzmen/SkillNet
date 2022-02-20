@@ -1,3 +1,5 @@
+# Veri tabanı ve web uygulaması 
+
 # [SkillNet]
 
 Yeni iş bulmak veya yeni bir yazılımcı bulmak artık daha kolay. 
