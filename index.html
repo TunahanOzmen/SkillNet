@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SkillNet</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+        <a class="navbar-brand" href="#" >SkillNet</a>
+        <a class="btn btn-primary" href="#"  onclick="document.getElementById('girisYap').style.display='block'" style="right: 250px; position: absolute;">Giriş Yap</a>
+        <a class="btn btn-primary" href="#" onclick="document.getElementById('bizeKatil').style.display='block'" style="right: 150px; position: absolute;">Bize Katıl</a>
+    </div>
+</nav>
+
+<!-- Giris yap butonu-->
+<div id="girisYap" class="modal">
+
+    <form id="girisFormu" action="giris.php" method="post">
+        <h1>Giriş Yap:</h1>
+
+        <div class="tabGiris">Bilgileriniz:
+            <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+            <p><input placeholder="Şifreniz..." oninput="this.className = ''" name="pword" type="password"></p>
+        </div>
+
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="nextButton" onclick="nextPrev2(1)">Next</button>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px;">
+            <span class="stepGiris"></span>
+        </div>
+    </form>
+
+    <script>
+
+        var currentTab2 = 0; // Current tab is set to be the first tab (0)
+        showTab2(currentTab2); // Display the current tab
+
+        function showTab2(n) {
+            var x = document.getElementsByClassName("tabGiris");
+            x[n].style.display = "block";
+            document.getElementById("nextButton").innerHTML = "Submit";
+            fixStepIndicator2(n)
+        }
+
+        function fixStepIndicator2(n) {
+            var i, x = document.getElementsByClassName("stepGiris");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+
+        function nextPrev2(n) {
+            var x = document.getElementsByClassName("tabGiris");
+            if (n === 1 && !validateForm2()) return false;
+            x[currentTab2].style.display = "none";
+            currentTab2 = currentTab2 + n;
+            if (currentTab2 >= x.length) {
+                document.getElementById("girisFormu").submit();
+                console.log("aaa");
+                return false;
+            }
+            showTab2(currentTab2);
+        }
+
+        function validateForm2() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tabGiris");
+            y = x[currentTab2].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].className += " invalid";
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("stepGiris")[currentTab2].className += " finish";
+            }
+            return valid;
+        }
+
+    </script>
+</div>
+
+<!-- Yeni uye butonu-->
+<div id="bizeKatil" class="modal">
+
+    <form id="formSecimi">
+        <h1>Kim Olarak Üye Olmak İstiyorsunuz:</h1>
+
+        <div style="padding-left: 40%; padding-top: 5%; font-size: larger">
+            <input type="radio" name="options" id="yazilimci" onclick="document.getElementById('yeniUye').style.display='block'" style="width: auto;" value="yazilimci"> Yazılımcı <br>
+            <input type="radio" name="options" id="sirket" onclick="document.getElementById('yeniSirket').style.display='block'" style="width: auto;" value="sirket"> Şirket <br>
+            <input type="radio" name="options" id="sivilToplumKurulusu" onclick="document.getElementById('yeniSTK').style.display='block'" style="width: auto;" value="sivilToplumKurulusu">  Sivil Toplum Kuruluşu <br>
+        </div>
+    </form>
+
+    <div id="yeniUye" class="modal">
+        <form id="yeniUyeFormu" action="yeniYazilimci.php" method="post">
+
+            <h1>Üye Ol:</h1>
+
+            <div class="tab">Kayıt Bilgileri:
+                <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                <p><input placeholder="Şifreniz..." oninput="this.className = ''" name="pword" type="password"></p>
+            </div>
+
+            <div class="tab">Genel Bilgiler:
+                <p><input placeholder="Adınız..." oninput="this.className = ''" name="fname"></p>
+                <p><input placeholder="Soyadınız..." oninput="this.className = ''" name="lname"></p>
+            </div>
+
+            <div class="tab">Kişisel Bilgileriniz:
+                <p><input placeholder="Doğum Tarihiniz(Yıl-Ay-Gün olarak giriniz)" oninput="this.className = ''" name="dogumTarihi"></p>
+                <p><input placeholder="Yaşadığınız Şehir" oninput="this.className = ''" name="sehir"></p>
+            </div>
+
+            <div class="tab">Uzmanlık Alanınız:
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="backend" value="Backend Developer">
+                    <label class="form-check-label" for="backend">Backend Developer</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="frontend" value="Frontend Developer">
+                    <label class="form-check-label" for="frontend">Frontend Developer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="fullStack" value="Full Stack Developer">
+                    <label class="form-check-label" for="fullStack">Full Stack Developer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="android" value="Android Developer">
+                    <label class="form-check-label" for="android">Android Developer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="IOS" value="IOS Developer">
+                    <label class="form-check-label" for="IOS">IOS Developer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="QA/Test" value="QA/Test Developer">
+                    <label class="form-check-label" for="QA/Test">QA/Test Engineer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="uzmanlik" id="DevOps" value="DevOps Developer">
+                    <label class="form-check-label" for="DevOps">DevOps Engineer</label>
+                </div>
+            </div>
+
+            <div class="tab"> Kaç Yıllık Tecrübeye Sahipsiniz:
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="1" value="1">
+                    <label class="form-check-label" for="1">1</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="2" value="2">
+                    <label class="form-check-label" for="2">2</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="3" value="3">
+                    <label class="form-check-label" for="3">3</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="4" value="4">
+                    <label class="form-check-label" for="4">4</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="5" value="5">
+                    <label class="form-check-label" for="5">5</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="6" value="6">
+                    <label class="form-check-label" for="6">6</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="7" value="7">
+                    <label class="form-check-label" for="7">7</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="8" value="8">
+                    <label class="form-check-label" for="8">8</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="9" value="9">
+                    <label class="form-check-label" for="9">9</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="10" value="10">
+                    <label class="form-check-label" for="10">10</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tecrube" id="11" value="11">
+                    <label class="form-check-label" for="11">10+</label>
+                </div>
+            </div>
+
+            <div class="tab"> Bildiğiniz Diller:
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil1" value="java" id="java" checked>
+                    <label class="form-check-label" for="java">Java</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil2" value="python" id="python" checked>
+                    <label class="form-check-label" for="python">Python</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil3" value="js" id="js" checked>
+                    <label class="form-check-label" for="js">JavaScript</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil4" value="c" id="c" checked>
+                    <label class="form-check-label" for="c">C</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil5" value="c_s" id="c_s" checked>
+                    <label class="form-check-label" for="c_s">C#</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil6" value="c_pp" id="c_pp" checked>
+                    <label class="form-check-label" for="c_pp">C++</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil7" value="ruby" id="ruby" checked>
+                    <label class="form-check-label" for="ruby">Ruby</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil8" value="swift" id="swift" checked>
+                    <label class="form-check-label" for="swift">Swift</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="dil9" value="php" id="php" checked>
+                    <label class="form-check-label" for="php">Php</label>
+                </div>
+            </div>
+
+            <div class="tab">Şirketlerde Aradığınız Özellikler:
+                <p><input placeholder="Maaş" oninput="this.className = ''" name="maas"></p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak1" value="yemek" id="yemek" checked>
+                    <label class="form-check-label" for="yemek">Yemek</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak2" value="egitimButcesi" id="egitimButcesi" checked>
+                    <label class="form-check-label" for="egitimButcesi">Eğitim Bütçesi</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak3" value="ulasim" id="ulasim" checked>
+                    <label class="form-check-label" for="ulasim">Ulaşım</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak4" value="saglikSigortasi" id="saglikSigortasi" checked>
+                    <label class="form-check-label" for="saglikSigortasi">Sağlık Sigortası</label>
+                </div>
+            </div>
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+        </form>
+    </div>
+
+    <div id="yeniSirket" class="modal">
+        <form id="yeniSirketFormu" action="yeniSirket.php" method="post">
+            <h1>Üye Ol:</h1>
+
+            <div class="tabSirket">Kayıt Bilgileri:
+                <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                <p><input placeholder="Şifreniz..." oninput="this.className = ''" name="pword" type="password"></p>
+                <p><input placeholder="Şirketinizin Adı..." oninput="this.className = ''" name="isim"></p>
+                <p><input placeholder="Şirketinizin İnternet Sitesi..." oninput="this.className = ''" name="internetSitesi"></p>
+                <p><input placeholder="Şirketinizin Bulunduğu Şehir..." oninput="this.className = ''" name="sehir"></p>
+                Verdiğiniz Ek Haklar:
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak1sirket" value="yemekSirket" id="yemekSirket" checked>
+                    <label class="form-check-label" for="yemekSirket">Yemek</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak2sirket" value="egitimButcesiSirket" id="egitimButcesiSirket" checked>
+                    <label class="form-check-label" for="egitimButcesiSirket">Eğitim Bütçesi</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak3sirket" value="ulasimSirket" id="ulasimSirket" checked>
+                    <label class="form-check-label" for="ulasimSirket">Ulaşım</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="yanhak4sirket" value="saglikSigortasiSirket" id="saglikSigortasiSirket" checked>
+                    <label class="form-check-label" for="saglikSigortasiSirket">Sağlık Sigortası</label>
+                </div>
+            </div>
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevButtonSirket" onclick="nextPrev3(-1)">Previous</button>
+                    <button type="button" id="nextButtonSirket" onclick="nextPrev3(1)">Next</button>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="stepSirket"></span>
+            </div>
+        </form>
+    </div>
+
+    <div id="yeniSTK" class="modal">
+        <form id="yeniSTKFormu" action="yeniSTK.php" method="post">
+            <h1>Üye Ol:</h1>
+
+            <div class="tabSTK">Kayıt Bilgileri:
+                <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                <p><input placeholder="Şifreniz..." oninput="this.className = ''" name="pword" type="password"></p>
+                <p><input placeholder="Kuruluşun Adı..." oninput="this.className = ''" name="isim"></p>
+                <p><input placeholder="Kuruluşun İnternet Sitesi..." oninput="this.className = ''" name="internetSitesi"></p>
+                <p><input placeholder="Kuruluşun Bulunduğu Şehir..." oninput="this.className = ''" name="sehir"></p>
+                <p><input placeholder="Kuruluşun Faaliyet Alanı..." oninput="this.className = ''" name="faaliyetAlani"></p>
+            </div>
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="nextButtonSTK" onclick="nextPrev4(1)">Next</button>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:40px;">
+                <span class="stepSTK"></span>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Formlar doldururken ekranin disinda bir noktaya basilirsa cikilir
+        var modal = document.getElementById('bizeKatil');
+        var modal2 = document.getElementById('girisYap');
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+            if (event.target === modal2) {
+                modal2.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        //yeni uye icin
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+        function showTab(n) {
+            // This function will display the specified tab of the form...
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            //... and fix the Previous/Next buttons:
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            }
+            else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            }
+            else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            //... and run a function that will display the correct step indicator:
+            fixStepIndicator(n)
+        }
+
+        function fixStepIndicator(n) {
+            // This function removes the "active" class of all steps...
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            //... and adds the "active" class on the current step:
+            x[n].className += " active";
+        }
+
+        function nextPrev(n) {
+            // This function will figure out which tab to display
+            var x = document.getElementsByClassName("tab");
+            // Exit the function if any field in the current tab is invalid:
+            if (n == 1 && !validateForm()) return false;
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            // Increase or decrease the current tab by 1:
+            currentTab = currentTab + n;
+            // if you have reached the end of the form...
+            if (currentTab >= x.length) {
+                // ... the form gets submitted:
+                document.getElementById("yeniUyeFormu").submit();
+                return false;
+            }
+            // Otherwise, display the correct tab:
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            // This function deals with validation of the form fields
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            // A loop that checks every input field in the current tab:
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
+                }
+            }
+            // If the valid status is true, mark the step as finished and valid:
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid; // return the valid status
+        }
+
+    </script>
+
+    <script>
+        //yeni sirket icin
+        var currentTab3 = 0; // Current tab is set to be the first tab (0)
+        showTab3(currentTab3); // Display the current tab
+
+        function showTab3(n) {
+            var x = document.getElementsByClassName("tabSirket");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevButtonSirket").style.display = "none";
+            }
+            else {
+                document.getElementById("prevButtonSirket").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextButtonSirket").innerHTML = "Submit";
+            }
+            else {
+                document.getElementById("nextButtonSirket").innerHTML = "Next";
+            }
+            fixStepIndicator3(n)
+        }
+
+        function fixStepIndicator3(n) {
+            var i, x = document.getElementsByClassName("stepSirket");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+
+        function nextPrev3(n) {
+            var x = document.getElementsByClassName("tabSirket");
+            if (n === 1 && !validateForm3()) return false;
+            x[currentTab3].style.display = "none";
+            currentTab3 = currentTab3 + n;
+            if (currentTab3 >= x.length) {
+                document.getElementById("yeniSirketFormu").submit();
+                return false;
+            }
+            showTab3(currentTab3);
+        }
+
+        function validateForm3() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tabSirket");
+            y = x[currentTab3].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].className += " invalid";
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("stepSirket")[currentTab3].className += " finish";
+            }
+            return valid;
+        }
+
+    </script>
+
+    <script>
+        //yeni STK icin
+        var currentTab4 = 0; // Current tab is set to be the first tab (0)
+        showTab4(currentTab4); // Display the current tab
+
+        function showTab4(n) {
+            var x = document.getElementsByClassName("tabSTK");
+            x[n].style.display = "block";
+            document.getElementById("nextButton").innerHTML = "Submit";
+            fixStepIndicator4(n)
+        }
+
+        function fixStepIndicator4(n) {
+            var i, x = document.getElementsByClassName("stepSTK");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+
+        function nextPrev4(n) {
+            var x = document.getElementsByClassName("tabSTK");
+            if (n === 1 && !validateForm4()) return false;
+            x[currentTab4].style.display = "none";
+            currentTab4 = currentTab4 + n;
+            if (currentTab4 >= x.length) {
+                document.getElementById("yeniSTKFormu").submit();
+                return false;
+            }
+            showTab4(currentTab4);
+        }
+
+        function validateForm4() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tabSTK");
+            y = x[currentTab4].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].className += " invalid";
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("stepSTK")[currentTab4].className += " finish";
+            }
+            return valid;
+        }
+
+    </script>
+</div>
+
+<!-- Masthead -->
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">Yeni İş veya Yeni Çalışan Bulmak Artık Daha Kolay</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Icons Grid -->
+<section class="features-icons bg-light text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="fas fa-list-ul m-auto text-primary"></i>
+          </div>
+          <h3>Öncelik Kriterler</h3>
+          <p class="lead mb-0">Önemli olan aradığınız özelliklerdir.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="icon-layers m-auto text-primary"></i>
+          </div>
+          <h3>Hızlı</h3>
+          <p class="lead mb-0">Sizin için uygun bir iş veya çalışan olduğu anda haberiniz olur.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="icon-check m-auto text-primary"></i>
+          </div>
+          <h3>Kullanımı Çok Kolay</h3>
+          <p class="lead mb-0">Sadece kayıt olmanız ve kriterlerinizi belirlemeniz yeterli.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Image Showcases -->
+<section class="showcase">
+  <div class="container-fluid p-0">
+    <div class="row no-gutters">
+      <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/anasayfa2.jpg');"></div>
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <h2>Yazılımcılar İçin</h2>
+        <p class="lead mb-0">Artık saatlerce iş aramanıza gerek yok. CV göndermek yerine kendinizde bulunan özellikleri ve şirketten beklentilerinizi girin. Sonrasını bize bırakın. Biz kriterlerinize uygun iş olduğunda size haber verelim.</p>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/anasayfa1.jpg');"></div>
+      <div class="col-lg-6 my-auto showcase-text">
+        <h2>Şirketler İçin</h2>
+        <p class="lead mb-0">İş yerinizde yeni bir yazılımcıya ihtiyaç duyduğunuzda artık saatlerce CV incelemesi yapmanıza gerek yok. İşiniz için önemli kriterleri ve olanaklarınızı girin sizin için en uygun aday yazılımcıyı bulup size haber verelim.</p>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/anasayfa3.jpg');"></div>
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <h2>Sivil Toplum Kuruluşları İçin</h2>
+        <p class="lead mb-0">Eğer bir sivil toplum kuruluşu olarak gönüllü bir yazılımcıya ihtiyacınız varsa aradığınızı burada bulacaksınız. Siz bilgilerinizi girin yazılımcı arkadaşlarımızdan isteyenler sizinle iletişime geçsin.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
